@@ -245,5 +245,36 @@
       time: 3000
     });
 
-  
+        $(document).ready(function(){
+            $.ajax({
+                url: "https://web-hukum.ferlinturnip.com/api/bidang-praktik", // API contoh
+                method: "GET",
+                dataType: "json",
+                success: function(data) {
+                  let html = '';
+                  console.log(data);
+                  var bidang_praktik_parent = data.bidang_praktik_parent;                  
+                  $('.title-bidang-praktik').text(bidang_praktik_parent.title)
+                  $('.subtitle-bidang-praktik').text(bidang_praktik_parent.subtitle)
+
+                  data.bidang_praktik.forEach(bidang => {
+                    html += '<div class="col-xl-4 col-lg-4 col-md-6">';
+                    html += '<div class="single-practice mb-30">';
+                    html += '<div class="practice-img">';
+                    html += '<img src="'+bidang.thumbnail+'">';
+                    html += '</div>';
+                    html += '<div class="practice-caption">';
+                    html += '            <h4><a href="#">'+bidang.title+'</a></h4>';
+                    html += '            <p>'+bidang.subtitle+'</p>';
+                    html += '        </div>';
+                    html += '</div>';
+                    html += '</div>';
+                  });
+                  $('.bidang-praktik-content').html(html);
+                },
+                error: function(error) {
+                    console.log("Terjadi kesalahan:", error);
+                }
+            });
+        });
 })(jQuery);
